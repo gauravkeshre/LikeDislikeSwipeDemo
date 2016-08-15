@@ -191,10 +191,10 @@ extension FirstViewController{
         }
         let rect1 = self.btnLikeTray.frame
         let rect2 = self.btnDislikeTray.frame
-        let rect3 = view.convertRect(view.frame, toView: self.btnLikeTray.superview)
+        let rect3 = view.frame //view.convertRect(view.frame, toView: self.btnLikeTray.superview)
         
-        var flag = CGRectIntersectsRect(rect1, rect3)
-        flag = flag ||  CGRectIntersectsRect(rect2, rect3)
+        var flag = CGRectIntersectsRect(rect3, rect1)
+        flag = flag ||  CGRectIntersectsRect(rect3, rect2)
         
         print("__-INTERSECTING : \(flag) ___")
         
