@@ -67,7 +67,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //MARK:- UITableViewDelegate methods
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 250 //self.view.frame.height - 44.0 - 20 - 64
+        return self.view.frame.height - 44.0 - 20 - 64
     }
     
     func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
