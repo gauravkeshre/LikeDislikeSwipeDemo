@@ -94,7 +94,7 @@ extension FirstViewController{
             Cello.initialIndexPath = indexPath
             
             /// Take a screenshot of the cell
-            Cello.snapshot = self.snapshopOfCell(cell)
+            Cello.snapshot = self.snapshopOfCell((cell as! DemoCell).label) // RISKY 🏹
             Cello.snapshot?.center = cell.center
             Cello.snapshot?.alpha = 0.0
             if Cello.snapshot != nil{
@@ -102,7 +102,7 @@ extension FirstViewController{
             }
             
             /// Make the like dislike tray visible
-            self.togglePreferenceTrays()
+            //            self.togglePreferenceTrays()
             
             /// Remove and preserve the content of this cell.
             Cello.color = colors.removeAtIndex(Cello.initialIndexPath!.row)
@@ -134,27 +134,36 @@ extension FirstViewController{
             
             Cello.snapshot?.center = Offset.centerFromPoint(locationInView)
             let diff = self.tableView.center.x - locationInView.x + Offset.x
-            
+            self.togglePreferenceTraysForOffset(diff)
             /// Scale the snapshot such that it reduces in size as it mooves away from center
             let t = scaleForOffset(diff)
             Cello.snapshot?.transform = CGAffineTransformMakeScale(t,t)
             break
         case .Ended: /// Cancelled
+            //MARK:- END PAN =================================================================
             fallthrough
         default:
             self.togglePreferenceTrays(shouldShow: false) // hide them
+            if self.checkCollision(Cello.snapshot){
+                
+            }else if let it = Cello.item, let ip = Cello.initialIndexPath, let col = Cello.color{
+                numbers.insert(it, atIndex: ip.row)
+                colors.insert(col, atIndex: ip.row)
+                self.tableView.insertRowsAtIndexPaths([ip], withRowAnimation: .Fade)
+            }
             Cello.clean()
+            
             break
         }
     }
     
     
-    func displayLikeDisLikeTrayFor(difference: CGFloat){
-        if difference < -1 {
+    func togglePreferenceTraysForOffset(difference: CGFloat){
+        if difference > -1 {
             self.likeVCenterConstraint.active = false
             self.dislikeVCenterConstraint.active = true
             
-        }else if difference > 1 {
+        }else if difference < 1 {
             self.likeVCenterConstraint.active = true
             self.dislikeVCenterConstraint.active = false
             
@@ -173,6 +182,23 @@ extension FirstViewController{
         UIView.animateWithDuration(0.3, animations: {
             self.view.layoutSubviews()
         })
+    }
+    
+    
+    func checkCollision(testView: UIView?) -> Bool{
+        guard let view = testView else{
+            return false
+        }
+        let rect1 = self.btnLikeTray.frame
+        let rect2 = self.btnDislikeTray.frame
+        let rect3 = view.convertRect(view.frame, toView: self.btnLikeTray.superview)
+        
+        var flag = CGRectIntersectsRect(rect1, rect3)
+        flag = flag ||  CGRectIntersectsRect(rect2, rect3)
+        
+        print("__-INTERSECTING : \(flag) ___")
+        
+        return flag
     }
     
 }
