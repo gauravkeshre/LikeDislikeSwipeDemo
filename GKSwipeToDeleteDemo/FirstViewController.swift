@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -33,8 +33,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let panGesture = UILongPressGestureRecognizer(target: self, action: #selector(FirstViewController.handlePanGesture(_:)))
-        self.tableView.addGestureRecognizer(panGesture)
+                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(FirstViewController.handlePanGesture(_:)))
+                panGesture.delegate = self
+                self.view.addGestureRecognizer(panGesture)
         
         self.view.bringSubviewToFront(self.btnLikeTray)
         self.view.bringSubviewToFront(self.btnDislikeTray)
@@ -69,10 +70,10 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return self.view.frame.height - 44.0 - 20 - 64
     }
-    
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
+        
+        func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+            return true
+        }
     //MARK:- UITableViewDataSource methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.numbers.count
@@ -82,7 +83,25 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("DemoCell", forIndexPath: indexPath) as! DemoCell
         cell.label.text = self.numbers[indexPath.row]
         cell.label.backgroundColor = self.colors[indexPath.row]
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(FirstViewController.handlePanGesture(_:)))
+//        panGesture.delegate = self
+//        cell.addGestureRecognizer(panGesture)
+        
         return cell
+    }
+    
+    //MARK:- UIGestureRecognizerDelegate methods
+
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer.isKindOfClass(UIPanGestureRecognizer.classForCoder()) {
+            let point =  (gestureRecognizer as! UIPanGestureRecognizer).translationInView(tableView)
+            return ((fabs(point.x) / fabs(point.y))) > 1 ? true : false
+        }
+        return false
+    }
+
+    func _gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 
