@@ -18,11 +18,15 @@ extension FirstViewController{
     //MARK:- Convenience methods
     func snapshopOfCell(inputView: UIView) -> UIView {
         
+        let labelView = UILabel(frame: CGRectMake(0, 0, inputView.frame.width, inputView.frame.height))
+        labelView.numberOfLines = 0
+        let text = "SCREENSHOT ---- SCREENSHOT ---- SCREENSHOT ----SCREENSHOT ----"
+        labelView.text = text
+        inputView.addSubview(labelView)
+        
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
         inputView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        
         let image = UIGraphicsGetImageFromCurrentImageContext() as UIImage
-        
         UIGraphicsEndImageContext()
         
         let cellSnapshot : UIView = UIImageView(image: image)
@@ -32,6 +36,8 @@ extension FirstViewController{
         cellSnapshot.layer.shadowRadius = 5.0
         cellSnapshot.layer.shadowOpacity = 0.4
         cellSnapshot.alpha = 0.7
+        labelView.removeFromSuperview()
+        
         return cellSnapshot
     }
     
@@ -121,10 +127,10 @@ extension FirstViewController{
             Cello.snapshot?.alpha = 0.8
             cell.hidden = true
             
-            /// Remove and preserve the content of this cell.
-            Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
-            Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
-            self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
+//            /// Remove and preserve the content of this cell.
+//            Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
+//            Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
+//            self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
             
             //            
             //            
@@ -149,6 +155,10 @@ extension FirstViewController{
             let t = scaleForOffset(diff)
             Cello.snapshot?.transform = CGAffineTransformMakeScale(t,t)
             break
+            case .Cancelled:
+            fallthrough
+        case .Ended:
+            fallthrough
         default: /// Ended OR Cancelled
             //MARK:- END PAN =================================================================
             
@@ -157,6 +167,11 @@ extension FirstViewController{
                 fallthrough
             case .dislike:
                 print("🎯")
+                /// Remove and preserve the content of this cell.
+                Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
+                Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
+                self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
+
                 break
             case .none:
                 if let it = Cello.item,
