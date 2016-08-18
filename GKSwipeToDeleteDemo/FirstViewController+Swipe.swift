@@ -53,10 +53,11 @@ extension FirstViewController{
     
     //MARK:- Gesture methods
     func handlePanGesture(pan: UIPanGestureRecognizer) {
-        guard self.numbers.count > 0 else{
+        let state = pan.state
+        guard self.numbers.count > 0 || self.panInProgress == true else{
             return
         }
-        let state = pan.state
+        
         let locationInView = pan.locationInView(self.tableView)
         let indexPath = tableView.indexPathForRowAtPoint(locationInView)
         
@@ -97,6 +98,7 @@ extension FirstViewController{
         switch state {
         //MARK:- BEGAN PAN
         case.Began:
+            panInProgress = true
             print("BEGAN:..")
             guard indexPath != nil else{
                 print("BEGAN: index path is nil. Returning..")
@@ -127,10 +129,10 @@ extension FirstViewController{
             Cello.snapshot?.alpha = 0.8
             cell.hidden = true
             
-//            /// Remove and preserve the content of this cell.
-//            Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
-//            Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
-//            self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
+            /// Remove and preserve the content of this cell.
+            Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
+            Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
+            self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
             
             //            
             //            
@@ -155,23 +157,23 @@ extension FirstViewController{
             let t = scaleForOffset(diff)
             Cello.snapshot?.transform = CGAffineTransformMakeScale(t,t)
             break
-            case .Cancelled:
+        case .Cancelled:
             fallthrough
         case .Ended:
             fallthrough
         default: /// Ended OR Cancelled
             //MARK:- END PAN =================================================================
-            
+            panInProgress = false
             switch self.checkCollision(Cello.snapshot) {
             case .like:
                 fallthrough
             case .dislike:
                 print("🎯")
                 /// Remove and preserve the content of this cell.
-                Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
-                Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
-                self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
-
+                //                Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
+                //                Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
+                //                self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
+                
                 break
             case .none:
                 if let it = Cello.item,

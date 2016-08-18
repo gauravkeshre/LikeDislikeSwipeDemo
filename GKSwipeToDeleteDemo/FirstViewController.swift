@@ -21,7 +21,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var numbers =  [String]()
     var colors =  [UIColor]()
-    
+    var panInProgress: Bool = false
     private lazy var allColors: [UIColor] = {
         var arr = [UIColor]()
         for i in 0 ... 9{

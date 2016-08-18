@@ -11,7 +11,7 @@
         <!--First View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9pv-A4-QxB" customClass="FirstViewController" customModule="GKSwipeToDeleteDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9pv-A4-QxB" customClass="FirstViewController" customModule="LikeDislike" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -44,7 +44,7 @@
                                 <rect key="frame" x="-4" y="64" width="383" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DemoCell" rowHeight="300" id="Zg6-YN-JCQ" customClass="DemoCell" customModule="GKSwipeToDeleteDemo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DemoCell" rowHeight="300" id="Zg6-YN-JCQ" customClass="DemoCell" customModule="LikeDislike" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="383" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zg6-YN-JCQ" id="doD-Wk-aHU">
@@ -130,7 +130,7 @@
         <!--Second-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="GKSwipeToDeleteDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="LikeDislike" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
