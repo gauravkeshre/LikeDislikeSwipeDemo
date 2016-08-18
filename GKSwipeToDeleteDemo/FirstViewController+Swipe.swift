@@ -47,6 +47,9 @@ extension FirstViewController{
     
     //MARK:- Gesture methods
     func handlePanGesture(pan: UIPanGestureRecognizer) {
+        guard self.numbers.count > 0 else{
+            return
+        }
         let state = pan.state
         let locationInView = pan.locationInView(self.tableView)
         let indexPath = tableView.indexPathForRowAtPoint(locationInView)
