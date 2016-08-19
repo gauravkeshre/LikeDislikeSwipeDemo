@@ -51,7 +51,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lsz-gZ-S27">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mobby" translatesAutoresizingMaskIntoConstraints="NO" id="NoW-FD-Wic">
+                                                    <rect key="frame" x="0.0" y="0.0" width="383" height="300"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lsz-gZ-S27">
                                                     <rect key="frame" x="8" y="8" width="367" height="284"/>
                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.67559645079999997" blue="0.001256773357" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -82,12 +85,16 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="NoW-FD-Wic" secondAttribute="bottom" constant="4" id="38A-Qs-gB4"/>
                                                 <constraint firstItem="Jd6-WX-HaW" firstAttribute="centerX" secondItem="doD-Wk-aHU" secondAttribute="centerX" constant="-70" id="3T8-4E-LBk"/>
                                                 <constraint firstItem="hk9-DV-Trp" firstAttribute="height" secondItem="Jd6-WX-HaW" secondAttribute="height" id="3WJ-wk-RbT"/>
                                                 <constraint firstItem="hk9-DV-Trp" firstAttribute="width" secondItem="Jd6-WX-HaW" secondAttribute="width" id="6sf-1H-EgI"/>
+                                                <constraint firstItem="NoW-FD-Wic" firstAttribute="leading" secondItem="doD-Wk-aHU" secondAttribute="leading" constant="4" id="9vP-PZ-X1F"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Lsz-gZ-S27" secondAttribute="bottom" id="Z7Z-8W-2Di"/>
                                                 <constraint firstItem="hk9-DV-Trp" firstAttribute="width" secondItem="hk9-DV-Trp" secondAttribute="height" multiplier="1:1" id="cc6-lN-Q9q"/>
+                                                <constraint firstAttribute="trailing" secondItem="NoW-FD-Wic" secondAttribute="trailing" constant="4" id="ddN-T0-8gW"/>
                                                 <constraint firstItem="Lsz-gZ-S27" firstAttribute="top" secondItem="doD-Wk-aHU" secondAttribute="topMargin" id="f2G-px-QNl"/>
+                                                <constraint firstItem="NoW-FD-Wic" firstAttribute="top" secondItem="doD-Wk-aHU" secondAttribute="top" constant="4" id="ge8-rH-b75"/>
                                                 <constraint firstItem="hk9-DV-Trp" firstAttribute="centerX" secondItem="doD-Wk-aHU" secondAttribute="centerX" constant="70" id="gx2-lw-xNW"/>
                                                 <constraint firstItem="Lsz-gZ-S27" firstAttribute="leading" secondItem="doD-Wk-aHU" secondAttribute="leadingMargin" id="qsj-b6-Zzb"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Jd6-WX-HaW" secondAttribute="bottom" constant="30" id="uI8-1H-xUE"/>

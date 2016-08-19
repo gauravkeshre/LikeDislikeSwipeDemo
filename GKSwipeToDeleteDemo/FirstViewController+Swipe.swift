@@ -17,13 +17,6 @@ extension FirstViewController{
     
     //MARK:- Convenience methods
     func snapshopOfCell(inputView: UIView) -> UIView {
-        
-        //        let labelView = UILabel(frame: CGRectMake(0, 0, inputView.frame.width, inputView.frame.height))
-        //        labelView.numberOfLines = 0
-        //        let text = "SCREENSHOT ---- SCREENSHOT ---- SCREENSHOT ----SCREENSHOT ----"
-        //        labelView.text = text
-        //        inputView.addSubview(labelView)
-        
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
         inputView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext() as UIImage
@@ -39,8 +32,6 @@ extension FirstViewController{
         container.layer.shadowOpacity = 0.5
         container.alpha = 0.7
         container.addSubview(cellSnapshot)
-        //        labelView.removeFromSuperview()
-        
         return container
     }
     
@@ -74,15 +65,14 @@ extension FirstViewController{
             static var snapshot : UIView?   = nil
             static var item     : String?   = nil
             static var color    : UIColor?  = nil
+            static var snapshotSize    : CGSize?  = nil
             
             static func clean(){
-                //                print(Cello.snapshot)
-                //                Cello.initialIndexPath = nil
                 Cello.snapshot!.removeFromSuperview()
-                //                print(Cello.snapshot)
                 Cello.snapshot = nil
                 Cello.item = nil
                 Cello.color = nil
+                Cello.snapshotSize = nil
             }
         }
         struct Offset{
@@ -108,6 +98,7 @@ extension FirstViewController{
                 break;
             }
             let cell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!
+            
             /// Preseve Offset so that the view doesn't jumps to touch center
             Offset.x = locationInView.x - cell.center.x
             Offset.y = locationInView.y - cell.center.y
@@ -116,7 +107,8 @@ extension FirstViewController{
             Path.initialIndexPath = indexPath
             
             /// Take a screenshot of the cell
-            Cello.snapshot = self.snapshopOfCell((cell as! DemoCell).label) // RISKY 🏹
+            Cello.snapshot = self.snapshopOfCell(cell) // RISKY 🏹
+            Cello.snapshotSize = Cello.snapshot?.frame.size
             Cello.snapshot?.center = cell.center
             Cello.snapshot?.alpha = 0.0
             if Cello.snapshot != nil{
@@ -136,18 +128,6 @@ extension FirstViewController{
             Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
             Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
             self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
-            
-            //            
-            //            
-            //            UIView.animateWithDuration(0.25, animations: { () -> Void in
-            //                Cello.snapshot?.alpha = 0.8
-            //                cell.alpha = 0.0
-            //                }, completion: { (finished) -> Void in
-            //                    if finished {
-            //                        cell.hidden = true
-            //                        self.tableView.deleteRowsAtIndexPaths([Path.initialIndexPath!], withRowAnimation:.Automatic)
-            //                    }
-            //            })
             break
             
         case .Changed:
@@ -157,8 +137,12 @@ extension FirstViewController{
             let diff = self.tableView.center.x - locationInView.x + Offset.x
             self.togglePreferenceTraysForOffset(diff)
             /// Scale the snapshot such that it reduces in size as it mooves away from center
+            let aspect = Cello.snapshotSize!.width / Cello.snapshotSize!.height
+            
+            
             let t = scaleForOffset(diff)
-            Cello.snapshot?.transform = CGAffineTransformMakeScale(t,t)
+            Cello.snapshot?.transform = CGAffineTransformMakeScale(t,t*aspect)
+            
             break
         case .Cancelled:
             fallthrough
