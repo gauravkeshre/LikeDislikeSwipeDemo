@@ -67,12 +67,18 @@
                                                     </constraints>
                                                     <color key="tintColor" red="0.89691506409999999" green="0.033570672289999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" image="dislike"/>
+                                                    <connections>
+                                                        <action selector="handleAction:" destination="Zg6-YN-JCQ" eventType="touchUpInside" id="R79-4P-ByE"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hk9-DV-Trp">
                                                     <rect key="frame" x="240" y="218" width="44" height="44"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="tintColor" red="0.34509804840000002" green="0.71764707569999997" blue="0.32156863810000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <state key="normal" image="like"/>
+                                                    <connections>
+                                                        <action selector="handleAction:" destination="Zg6-YN-JCQ" eventType="touchUpInside" id="c1T-GN-Bh5"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -90,6 +96,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="btnDislike" destination="Jd6-WX-HaW" id="hUG-Sh-387"/>
+                                            <outlet property="btnLike" destination="hk9-DV-Trp" id="Z0s-KS-4SU"/>
                                             <outlet property="label" destination="Lsz-gZ-S27" id="w04-jK-GBZ"/>
                                         </connections>
                                     </tableViewCell>

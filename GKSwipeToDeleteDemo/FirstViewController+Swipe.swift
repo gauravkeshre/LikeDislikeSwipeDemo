@@ -18,27 +18,30 @@ extension FirstViewController{
     //MARK:- Convenience methods
     func snapshopOfCell(inputView: UIView) -> UIView {
         
-        let labelView = UILabel(frame: CGRectMake(0, 0, inputView.frame.width, inputView.frame.height))
-        labelView.numberOfLines = 0
-        let text = "SCREENSHOT ---- SCREENSHOT ---- SCREENSHOT ----SCREENSHOT ----"
-        labelView.text = text
-        inputView.addSubview(labelView)
+        //        let labelView = UILabel(frame: CGRectMake(0, 0, inputView.frame.width, inputView.frame.height))
+        //        labelView.numberOfLines = 0
+        //        let text = "SCREENSHOT ---- SCREENSHOT ---- SCREENSHOT ----SCREENSHOT ----"
+        //        labelView.text = text
+        //        inputView.addSubview(labelView)
         
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
         inputView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext() as UIImage
         UIGraphicsEndImageContext()
+        let container : UIView = UIView(frame: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        container.backgroundColor = UIColor.clearColor()
         
         let cellSnapshot : UIView = UIImageView(image: image)
-        cellSnapshot.layer.masksToBounds = false
+        cellSnapshot.layer.masksToBounds = true
         cellSnapshot.layer.cornerRadius = 12.0
-        cellSnapshot.layer.shadowOffset = CGSizeMake(-5.0, 0.0)
-        cellSnapshot.layer.shadowRadius = 5.0
-        cellSnapshot.layer.shadowOpacity = 0.4
-        cellSnapshot.alpha = 0.7
-        labelView.removeFromSuperview()
+        container.layer.shadowOffset = CGSizeMake(0.0, 0.0)
+        container.layer.shadowRadius = 8.0
+        container.layer.shadowOpacity = 0.5
+        container.alpha = 0.7
+        container.addSubview(cellSnapshot)
+        //        labelView.removeFromSuperview()
         
-        return cellSnapshot
+        return container
     }
     
     //MARK:- Mathematics methods
@@ -203,11 +206,11 @@ extension FirstViewController{
     
     
     func togglePreferenceTraysForOffset(difference: CGFloat){
-        if difference > -1 {
+        if difference > 1 {
             self.likeVCenterConstraint.active = false
             self.dislikeVCenterConstraint.active = true
             
-        }else if difference < 1 {
+        }else if difference < -1 {
             self.likeVCenterConstraint.active = true
             self.dislikeVCenterConstraint.active = false
             
