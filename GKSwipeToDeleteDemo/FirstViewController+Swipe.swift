@@ -35,7 +35,7 @@ extension FirstViewController{
         return container
     }
     
-    //MARK:- Mathematics methods
+    //MARK:- Mathematics & Geometry methods
     func scaleForOffset(x: CGFloat) -> CGFloat{
         if -0.5 ... 0.5 ~= x{
             return 1
@@ -44,6 +44,61 @@ extension FirstViewController{
         let k = 1 - ( a / (a + 50))
         return max(min(k, 1.0), 0.2)
     }
+    func checkCollision(testView: UIView?) -> CollisionTest{
+        guard let view = testView else{
+            return .none
+        }
+        let rect1 = self.btnLikeTray.frame
+        let rect2 = self.btnDislikeTray.frame
+        
+        let snapshotRect = self.tableView.convertRect(view.frame, toView: self.btnLikeTray.superview)
+        
+        let like = CGRectIntersectsRect(snapshotRect, rect1)
+        let dislike =  CGRectIntersectsRect(snapshotRect, rect2)
+        
+        if like{
+            print("Collision happened at LiKE");
+            return .like
+        }
+        
+        if dislike{
+            print("Collision happened at DIS-LiKE");
+            return .dislike
+        }
+        return .none
+    }
+    //MARK:- TOggle Trays methods
+    func togglePreferenceTraysForOffset(difference: CGFloat){
+        if difference > 1 {
+            self.likeVCenterConstraint.active = false
+            self.dislikeVCenterConstraint.active = true
+            
+        }else if difference < -1 {
+            self.likeVCenterConstraint.active = true
+            self.dislikeVCenterConstraint.active = false
+            
+        }else{
+            self.likeVCenterConstraint.active = false
+            self.dislikeVCenterConstraint.active = false
+        }
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.layoutSubviews()
+        })
+    }
+    
+    func togglePreferenceTrays(shouldShow show: Bool = true){
+        self.likeVCenterConstraint.active = show
+        self.dislikeVCenterConstraint.active = show
+        UIView.animateWithDuration(0.3, animations: {
+            self.view.layoutSubviews()
+        })
+    }
+    
+    func animateAndDismissTray(tray: UIButton){
+        //        let circl
+    }
+    
+    
     
     //MARK:- Gesture methods
     func handlePanGesture(pan: UIPanGestureRecognizer) {
@@ -151,11 +206,28 @@ extension FirstViewController{
         default: /// Ended OR Cancelled
             //MARK:- END PAN =================================================================
             panInProgress = false
-            switch self.checkCollision(Cello.snapshot) {
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                Cello.snapshot!.alpha = 0.0
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        Cello.clean()
+                    }
+            })
+            
+            
+            
+            let collision = self.checkCollision(Cello.snapshot)
+            switch collision  {
             case .like:
                 fallthrough
             case .dislike:
                 print("🎯")
+                self.animateRippleFor(collision, onCompletion: {
+                    self.togglePreferenceTrays(shouldShow: false) // hide them
+                })
+                
+                
+                
                 /// Remove and preserve the content of this cell.
                 //                Cello.color = colors.removeAtIndex(Path.initialIndexPath!.row)
                 //                Cello.item =  numbers.removeAtIndex(Path.initialIndexPath!.row)
@@ -173,71 +245,55 @@ extension FirstViewController{
                 }else{
                     print("it, ip, col one of them is nil");
                 }
+                self.togglePreferenceTrays(shouldShow: false) // hide them
+                
                 break
             }
             
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
-                Cello.snapshot!.alpha = 0.0
-                }, completion: { (finished) -> Void in
-                    if finished {
-                        Cello.clean()
-                        self.togglePreferenceTrays(shouldShow: false) // hide them
-                    }
-            })
             break
         }
     }
     
     
-    func togglePreferenceTraysForOffset(difference: CGFloat){
-        if difference > 1 {
-            self.likeVCenterConstraint.active = false
-            self.dislikeVCenterConstraint.active = true
+    func animateRippleFor(collision: CollisionTest, onCompletion: () -> ()){
+        let v = (collision == .like) ? self.btnLikeTray : self.btnDislikeTray
+        
+        //        let frame = CGRect(x: 0, y: 0, width: 12, height: 12)
+        let circle = UIView(frame: v.frame)
+        circle.userInteractionEnabled = false
+        circle.layer.cornerRadius = (circle.frame.size.width / 2)
+        circle.backgroundColor = UIColor(red: 97/255, green: 199/255, blue: 199/255, alpha: 1)
+        v.superview!.addSubview(circle)
+        v.superview!.bringSubviewToFront(circle)
+        //        circle.alpha = 0.1
+        
+        circle.center = v.center
+        UIView .animateKeyframesWithDuration(0.5, delay: 0.0, options: .CalculationModeCubic, animations: {
+            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.4, animations: {
+                circle.alpha = 0.6
+                circle.transform = CGAffineTransformScale(CGAffineTransformIdentity, 7.0, 7.0)
+            })
+            UIView.addKeyframeWithRelativeStartTime(0.4, relativeDuration: 0.6, animations: {
+                circle.alpha = 0.2
+                circle.transform = CGAffineTransformScale(CGAffineTransformIdentity, 18.0, 18.0)
+            })
             
-        }else if difference < -1 {
-            self.likeVCenterConstraint.active = true
-            self.dislikeVCenterConstraint.active = false
+            //            UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.3, animations: {
+            //                circle.alpha = 0.6
+            //                circle.transform = CGAffineTransformScale(CGAffineTransformIdentity, 7.0, 7.0)
+            //            })
+            //            
+            //            UIView.addKeyframeWithRelativeStartTime(0.8, relativeDuration: 1.0, animations: {
+            //                circle.alpha = 0.2
+            //                circle.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0)
+            //            })
             
-        }else{
-            self.likeVCenterConstraint.active = false
-            self.dislikeVCenterConstraint.active = false
+        }) { (finished) in
+            if finished{
+                circle.removeFromSuperview()
+                onCompletion()
+            }
         }
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.layoutSubviews()
-        })
-    }
-    
-    func togglePreferenceTrays(shouldShow show: Bool = true){
-        self.likeVCenterConstraint.active = show
-        self.dislikeVCenterConstraint.active = show
-        UIView.animateWithDuration(0.3, animations: {
-            self.view.layoutSubviews()
-        })
-    }
-    
-    
-    func checkCollision(testView: UIView?) -> CollisionTest{
-        guard let view = testView else{
-            return .none
-        }
-        let rect1 = self.btnLikeTray.frame
-        let rect2 = self.btnDislikeTray.frame
-        
-        let snapshotRect = self.tableView.convertRect(view.frame, toView: self.btnLikeTray.superview)
-        
-        let like = CGRectIntersectsRect(snapshotRect, rect1)
-        let dislike =  CGRectIntersectsRect(snapshotRect, rect2)
-        
-        if like{
-            print("Collision happened at LiKE");
-            return .like
-        }
-        
-        if dislike{
-            print("Collision happened at DIS-LiKE");
-            return .dislike
-        }
-        return .none
     }
 }
 

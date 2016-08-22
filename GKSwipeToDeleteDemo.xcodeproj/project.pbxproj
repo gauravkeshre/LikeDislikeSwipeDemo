@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F4A63F121D68DAA100B228A1 /* SecondViewController+Ripple.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A63F111D68DAA100B228A1 /* SecondViewController+Ripple.swift */; };
 		F4FF9BDB1D61F68A0089F65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF9BDA1D61F68A0089F65A /* AppDelegate.swift */; };
 		F4FF9BDD1D61F68A0089F65A /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF9BDC1D61F68A0089F65A /* FirstViewController.swift */; };
 		F4FF9BDF1D61F68A0089F65A /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF9BDE1D61F68A0089F65A /* SecondViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F4A63F111D68DAA100B228A1 /* SecondViewController+Ripple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SecondViewController+Ripple.swift"; sourceTree = "<group>"; };
 		F4FF9BD71D61F68A0089F65A /* LikeDislike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LikeDislike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4FF9BDA1D61F68A0089F65A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4FF9BDC1D61F68A0089F65A /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				F4FF9BDC1D61F68A0089F65A /* FirstViewController.swift */,
 				F4FF9BF21D6249E30089F65A /* FirstViewController+Swipe.swift */,
 				F4FF9BDE1D61F68A0089F65A /* SecondViewController.swift */,
+				F4A63F111D68DAA100B228A1 /* SecondViewController+Ripple.swift */,
 				F4FF9BE01D61F68A0089F65A /* Main.storyboard */,
 				F4FF9BE31D61F68A0089F65A /* Assets.xcassets */,
 				F4FF9BE51D61F68A0089F65A /* LaunchScreen.storyboard */,
@@ -153,6 +156,7 @@
 				F4FF9BDB1D61F68A0089F65A /* AppDelegate.swift in Sources */,
 				F4FF9BEF1D61F8CF0089F65A /* DemoCell.swift in Sources */,
 				F4FF9BF31D6249E30089F65A /* FirstViewController+Swipe.swift in Sources */,
+				F4A63F121D68DAA100B228A1 /* SecondViewController+Ripple.swift in Sources */,
 				F4FF9BDD1D61F68A0089F65A /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
