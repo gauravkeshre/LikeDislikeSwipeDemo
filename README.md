@@ -10,6 +10,6 @@ Instead of using collectionview here I am taking a screnshot of the cell and rem
 # Screencast
 ----
 
-![](Screens/screencast1.gif)
+![](Screens/screencast1.gif?raw=true&width=50&height=100)
 
-![](Screens/screencast2.gif)
+![](Screens/screencast2.gif?raw=true&width=50&height=100)
